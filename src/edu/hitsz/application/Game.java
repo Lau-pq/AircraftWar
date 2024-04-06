@@ -119,7 +119,7 @@ public class Game extends JPanel {
                         enemyAircrafts.add(new EliteEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                0,
+                                5,
                                 10,
                                 30
                         ));
@@ -252,8 +252,8 @@ public class Game extends JPanel {
                         if (enemyAircraft instanceof EliteEnemy) {
                             int rand = (int)(Math.random() * 100) + 1; // [1, 100]
                             int blood_prop = 20;
-                            int bomb_prop = 40;
-                            int bullet_prop = 60;
+                            int bomb_prop = 30;
+                            int bullet_prop = 50;
                             if (rand <= blood_prop) {
                                 props.add(new BloodProp(
                                         enemyAircraft.getLocationX(),
@@ -297,12 +297,15 @@ public class Game extends JPanel {
                 prop.vanish();
                 if (prop.notValid()) {
                     if (prop instanceof BloodProp) {
-                        heroAircraft.increaseHp(30);
-                        System.out.println("BloodSupply active!");
+                        prop.func(heroAircraft);
+                        prop.print_func();
                     } else if (prop instanceof BombProp) {
-                        System.out.println("BombSupply active!");
+                        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+                            prop.func(enemyAircraft);
+                        }
+                        prop.print_func();
                     } else if (prop instanceof BulletProp) {
-                        System.out.println("FireSupply active!");
+                        prop.print_func();
                     } else {
                     }
                 }

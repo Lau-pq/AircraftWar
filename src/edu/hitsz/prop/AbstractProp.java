@@ -1,8 +1,8 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
-
 
 /**
  * 所有种类掉落物的抽象父类：
@@ -23,4 +23,8 @@ public abstract class AbstractProp extends AbstractFlyingObject {
             vanish();
         }
     }
+
+    public abstract void func(AbstractAircraft aircraft);
+    public abstract void print_func();
 }
+
