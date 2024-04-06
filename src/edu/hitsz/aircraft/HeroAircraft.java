@@ -40,6 +40,13 @@ public class HeroAircraft extends AbstractAircraft {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
+    public void increaseHp(int increase) {
+        hp += increase;
+        if (hp >= maxHp) {
+            hp = maxHp;
+        }
+    }
+
     @Override
     public void forward() {
         // 英雄机由鼠标控制，不通过forward函数移动
@@ -66,4 +73,7 @@ public class HeroAircraft extends AbstractAircraft {
         return res;
     }
 
+    public void increaseShootNum(int num) {
+        this.shootNum += num;
+    }
 }

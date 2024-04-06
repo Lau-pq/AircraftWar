@@ -7,7 +7,7 @@ import edu.hitsz.bullet.EnemyBullet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EliteEnemy extends AbstractAircraft{
+public class EliteEnemy extends EnemyAircraft{
     /**攻击方式 */
 
     /**
@@ -24,6 +24,9 @@ public class EliteEnemy extends AbstractAircraft{
      * 子弹射击方向 (向上发射：1，向下发射：-1)
      */
     private int direction = 1;
+
+    // 得分
+    private int score = 30;
 
     public EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
@@ -57,5 +60,10 @@ public class EliteEnemy extends AbstractAircraft{
             res.add(bullet);
         }
         return res;
+    }
+
+    @Override
+    public int getScore() {
+        return score;
     }
 }

@@ -23,8 +23,5 @@ public abstract class AbstractProp extends AbstractFlyingObject {
             vanish();
         }
     }
-
-    public abstract void func(AbstractAircraft aircraft);
-    public abstract void print_func();
 }
 

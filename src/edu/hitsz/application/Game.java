@@ -36,7 +36,7 @@ public class Game extends JPanel {
     private int timeInterval = 40;
 
     private final HeroAircraft heroAircraft;
-    private final List<AbstractAircraft> enemyAircrafts;
+    private final List<EnemyAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
@@ -107,7 +107,7 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
-                    if (Math.random() < 0.75) {
+                    if (Math.random() < 0.5) {
                         enemyAircrafts.add(new MobEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
@@ -182,7 +182,7 @@ public class Game extends JPanel {
 
     private void shootAction() {
         // TODO 敌机射击
-        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+        for (EnemyAircraft enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());
         }
         // 英雄射击
@@ -199,7 +199,7 @@ public class Game extends JPanel {
     }
 
     private void aircraftsMoveAction() {
-        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+        for (EnemyAircraft enemyAircraft : enemyAircrafts) {
             enemyAircraft.forward();
         }
     }
@@ -235,7 +235,7 @@ public class Game extends JPanel {
             if (bullet.notValid()) {
                 continue;
             }
-            for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+            for (EnemyAircraft enemyAircraft : enemyAircrafts) {
                 if (enemyAircraft.notValid()) {
                     // 已被其他子弹击毁的敌机，不再检测
                     // 避免多个子弹重复击毁同一敌机的判定
@@ -248,34 +248,33 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
-                        score += 10;
+                        score += enemyAircraft.getScore();
                         if (enemyAircraft instanceof EliteEnemy) {
                             int rand = (int)(Math.random() * 100) + 1; // [1, 100]
-                            int blood_prop = 20;
-                            int bomb_prop = 30;
-                            int bullet_prop = 50;
-                            if (rand <= blood_prop) {
+                            int bloodProb = 20;
+                            int bombProb = 30;
+                            int bulletProb = 50;
+                            if (rand <= bloodProb) {
                                 props.add(new BloodProp(
                                         enemyAircraft.getLocationX(),
                                         enemyAircraft.getLocationY(),
                                         0,
                                         (int)(enemyAircraft.getSpeedY() * 0.5)
                                 ));
-                            } else if (rand <= bomb_prop) {
+                            } else if (rand <= bombProb) {
                                 props.add(new BombProp(
                                         enemyAircraft.getLocationX(),
                                         enemyAircraft.getLocationY(),
                                         0,
                                         (int)(enemyAircraft.getSpeedY() * 0.5)
                                 ));
-                            } else if (rand <= bullet_prop) {
+                            } else if (rand <= bulletProb) {
                                 props.add(new BulletProp(
                                         enemyAircraft.getLocationX(),
                                         enemyAircraft.getLocationY(),
                                         0,
                                         (int)(enemyAircraft.getSpeedY() * 0.5)
                                 ));
-                            } else {
                             }
                         }
                     }
@@ -295,21 +294,13 @@ public class Game extends JPanel {
             }
             if (heroAircraft.crash(prop)) {
                 prop.vanish();
-                if (prop.notValid()) {
-                    if (prop instanceof BloodProp) {
-                        prop.func(heroAircraft);
-                        prop.print_func();
-                    } else if (prop instanceof BombProp) {
-                        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
-                            prop.func(enemyAircraft);
-                        }
-                        prop.print_func();
-                    } else if (prop instanceof BulletProp) {
-                        prop.print_func();
-                    } else {
+                switch (prop) {
+                    case BloodProp bloodProp -> bloodProp.bloodSupply(heroAircraft);
+                    case BombProp bombProp -> bombProp.bombSupply(enemyAircrafts);
+                    case BulletProp bulletProp -> bulletProp.fireSupply(heroAircraft);
+                    default -> {
                     }
                 }
-            } else {
             }
         }
     }

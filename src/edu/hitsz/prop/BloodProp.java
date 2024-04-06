@@ -15,13 +15,8 @@ public class BloodProp extends AbstractProp {
         super(locationX, locationY, speedX, speedY);
     }
 
-    @Override
-    public void func(AbstractAircraft aircraft) {
-        aircraft.increaseHp(30);
-    }
-
-    @Override
-    public void print_func() {
+    public void bloodSupply(HeroAircraft heroAircraft) {
+        heroAircraft.increaseHp(30);
         System.out.println("BloodSupply active!");
     }
 }

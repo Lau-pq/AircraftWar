@@ -32,17 +32,9 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         }
     }
 
-    public void increaseHp(int increase) {
-        hp += increase;
-        if (hp >= maxHp) {
-            hp = maxHp;
-        }
-    }
-
     public int getHp() {
         return hp;
     }
-
 
     /**
      * 飞机射击方法，可射击对象必须实现

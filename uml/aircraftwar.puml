@@ -31,10 +31,18 @@ abstract class AbstractAircraft
     # hp:int
     + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + decreaseHp(int decrease):void
-    + increaseHp(int increase):void
     + getHp():int
     + {abstract} shoot():List<BaseBullet>
  }
+
+abstract class EnemyAircraft
+{
+    + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {abstract} shoot():List<BaseBullet>
+    + {abstract} getScore():int
+}
+
+AbstractAircraft <|-- EnemyAircraft
 
 class EliteEnemy {
     - shootNum:int
@@ -43,27 +51,30 @@ class EliteEnemy {
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<BaseBullet>
+    + getScore():int
 }
 
-AbstractAircraft <|-- EliteEnemy
+EnemyAircraft <|-- EliteEnemy
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
+}
+EnemyAircraft <|-- MobEnemy
 
 class HeroAircraft {
     - shootNum:int
     - power:int
     - direction:int
     + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + increaseHp(int increase):void
     + forward():void
     + shoot():List<BaseBullet>
 }
 
 AbstractAircraft <|-- HeroAircraft
-
-class MobEnemy {
-    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
-    + shoot():List<BaseBullet>
-}
-AbstractAircraft <|-- MobEnemy
 
 abstract class BaseBullet
 {
@@ -91,15 +102,12 @@ abstract class AbstractProp
     + AbstractProp(int locationX, int locationY,
     int speedX, int speedY)
     + forward():void
-    + {abstract} func(AbstractAircraft aircraft):void
-    + {abstract} print_func():void
 }
 
 class BloodProp {
     + BloodProp(int locationX, int locationY,
     int speedX, int speedY)
-    + func(AbstractAircraft aircraft):void
-    + print_func():void
+    + bloodSupply(HeroAircraft heroAircraft):void
 }
 
 AbstractProp <|-- BloodProp
@@ -107,8 +115,7 @@ AbstractProp <|-- BloodProp
 class BombProp {
     + BombProp(int locationX, int locationY,
     int speedX, int speedY)
-    + func(AbstractAircraft aircraft):void
-    + print_func():void
+    + bombSupply(List<EnemyAircraft> enemyAircrafts):void
 }
 
 AbstractProp <|-- BombProp
@@ -116,8 +123,7 @@ AbstractProp <|-- BombProp
 class BulletProp {
     + BulletProp(int locationX, int locationY,
     int speedX, int speedY)
-    + func(AbstractAircraft aircraft):void
-    + print_func():void
+    + fireSupply(HeroAircraft heroAircraft):void
 }
 
 AbstractProp <|-- BulletProp
