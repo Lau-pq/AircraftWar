@@ -1,8 +1,11 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
+import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
+
+import java.util.List;
 
 /**
  * 所有种类掉落物的抽象父类：

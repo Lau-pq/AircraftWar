@@ -3,6 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
@@ -68,10 +69,7 @@ public class Game extends JPanel {
     private boolean gameOverFlag = false;
 
     public Game() {
-        heroAircraft = new HeroAircraft(
-                Main.WINDOW_WIDTH / 2,
-                Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 100);
+        heroAircraft = HeroAircraft.getHeroAircraft();
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -108,21 +106,11 @@ public class Game extends JPanel {
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
                     if (Math.random() < 0.5) {
-                        enemyAircrafts.add(new MobEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                0,
-                                10,
-                                30
-                        ));
+                        MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
+                        enemyAircrafts.add(mobEnemyFactory.createAircraft());
                     } else {
-                        enemyAircrafts.add(new EliteEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
-                                5,
-                                10,
-                                30
-                        ));
+                        EliteEnemyFactory eliteEnemyFactory = new EliteEnemyFactory();
+                        enemyAircrafts.add(eliteEnemyFactory.createAircraft());
                     }
                 }
                 // 飞机射出子弹
@@ -251,30 +239,24 @@ public class Game extends JPanel {
                         score += enemyAircraft.getScore();
                         if (enemyAircraft instanceof EliteEnemy) {
                             int rand = (int)(Math.random() * 100) + 1; // [1, 100]
-                            int bloodProb = 20;
-                            int bombProb = 30;
-                            int bulletProb = 50;
+                            int bloodProb = 30;
+                            int bombProb = 60;
+                            int bulletProb = 90;
                             if (rand <= bloodProb) {
-                                props.add(new BloodProp(
+                                BloodPropFactory bloodPropFactory = new BloodPropFactory();
+                                props.add(bloodPropFactory.createProp(
                                         enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        0,
-                                        (int)(enemyAircraft.getSpeedY() * 0.5)
-                                ));
+                                        enemyAircraft.getLocationY()));
                             } else if (rand <= bombProb) {
-                                props.add(new BombProp(
+                                BombPropFactory bombPropFactory = new BombPropFactory();
+                                props.add(bombPropFactory.createProp(
                                         enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        0,
-                                        (int)(enemyAircraft.getSpeedY() * 0.5)
-                                ));
+                                        enemyAircraft.getLocationY()));
                             } else if (rand <= bulletProb) {
-                                props.add(new BulletProp(
+                                BulletPropFactory bulletProp =new BulletPropFactory();
+                                props.add(bulletProp.createProp(
                                         enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY(),
-                                        0,
-                                        (int)(enemyAircraft.getSpeedY() * 0.5)
-                                ));
+                                        enemyAircraft.getLocationY()));
                             }
                         }
                     }

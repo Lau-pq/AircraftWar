@@ -11,12 +11,15 @@ import edu.hitsz.aircraft.HeroAircraft;
  * @author Lpq
  */
 public class BloodProp extends AbstractProp {
+    private int recoverHp = 30;
+
     public BloodProp(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
     }
 
+
     public void bloodSupply(HeroAircraft heroAircraft) {
-        heroAircraft.increaseHp(30);
+        heroAircraft.increaseHp(this.recoverHp);
         System.out.println("BloodSupply active!");
     }
 }
