@@ -102,12 +102,13 @@ abstract class AbstractProp
     + AbstractProp(int locationX, int locationY,
     int speedX, int speedY)
     + forward():void
+    + {abstract} activate(HeroAircraft heroAircraft): void
 }
 
 class BloodProp {
     + BloodProp(int locationX, int locationY,
     int speedX, int speedY)
-    + bloodSupply(HeroAircraft heroAircraft):void
+    + activate(HeroAircraft heroAircraft):void
 }
 
 AbstractProp <|-- BloodProp
@@ -115,7 +116,7 @@ AbstractProp <|-- BloodProp
 class BombProp {
     + BombProp(int locationX, int locationY,
     int speedX, int speedY)
-    + bombSupply(List<EnemyAircraft> enemyAircrafts):void
+    + activate(HeroAircraft heroAircraft):void
 }
 
 AbstractProp <|-- BombProp
@@ -123,7 +124,7 @@ AbstractProp <|-- BombProp
 class BulletProp {
     + BulletProp(int locationX, int locationY,
     int speedX, int speedY)
-    + fireSupply(HeroAircraft heroAircraft):void
+    + activate(HeroAircraft heroAircraft):void
 }
 
 AbstractProp <|-- BulletProp

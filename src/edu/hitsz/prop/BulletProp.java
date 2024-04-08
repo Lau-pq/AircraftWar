@@ -10,7 +10,8 @@ public class BulletProp extends AbstractProp {
         super(locationX, locationY, speedX, speedY);
     }
 
-    public void fireSupply(HeroAircraft heroAircraft) {
+    @Override
+    public void activate(HeroAircraft heroAircraft) {
         heroAircraft.increaseShootNum(this.shootNum);
         System.out.println("FireSupply active!");
     }

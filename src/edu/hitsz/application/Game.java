@@ -274,15 +274,9 @@ public class Game extends JPanel {
             if (prop.notValid()) {
                 continue;
             }
-            if (heroAircraft.crash(prop)) {
+            if (heroAircraft.crash(prop) || prop.crash(heroAircraft)) {
+                prop.activate(heroAircraft);
                 prop.vanish();
-                switch (prop) {
-                    case BloodProp bloodProp -> bloodProp.bloodSupply(heroAircraft);
-                    case BombProp bombProp -> bombProp.bombSupply(enemyAircrafts);
-                    case BulletProp bulletProp -> bulletProp.fireSupply(heroAircraft);
-                    default -> {
-                    }
-                }
             }
         }
     }

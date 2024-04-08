@@ -9,14 +9,16 @@ abstract class AbstractProp
 {
     + AbstractProp(int locationX, int locationY,
     int speedX, int speedY)
-    + forward():void
 }
+
+PropFactory ..> AbstractProp
 
 class BloodPropFactory {
     + createProp(int locationX, int locationY): AbstractProp
 }
 
 PropFactory <|.. BloodPropFactory
+
 
 class BombPropFactory {
     + createProp(int locationX, int locationY): AbstractProp
@@ -33,28 +35,23 @@ PropFactory <|.. BulletPropFactory
 class BloodProp {
     + BloodProp(int locationX, int locationY,
     int speedX, int speedY)
-    + bloodSupply(HeroAircraft heroAircraft):void
 }
 
-AbstractProp <|.. BloodProp
-BloodPropFactory ..> BloodProp
+AbstractProp <|-- BloodProp
 
 class BombProp {
     + BombProp(int locationX, int locationY,
     int speedX, int speedY)
-    + bombSupply(List<EnemyAircraft> enemyAircrafts):void
 }
 
-AbstractProp <|.. BombProp
-BombPropFactory ..> BloodProp
+AbstractProp <|-- BombProp
 
 class BulletProp {
     + BulletProp(int locationX, int locationY,
     int speedX, int speedY)
-    + fireSupply(HeroAircraft heroAircraft):void
 }
 
-AbstractProp <|.. BulletProp
-BulletPropFactory ..> BulletProp
+AbstractProp <|-- BulletProp
+
 
 @enduml
