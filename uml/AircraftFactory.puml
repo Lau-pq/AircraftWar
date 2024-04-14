@@ -8,7 +8,8 @@ interface AircraftFactory {
 abstract class EnemyAircraft
 {
     + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
-
+    + {abstract} shoot():List<BaseBullet>
+    + {abstract} getScore():int
 }
 
 AircraftFactory ..> EnemyAircraft
@@ -26,13 +27,22 @@ class MobEnemyFactory {
 AircraftFactory <|.. MobEnemyFactory
 
 class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
 }
 
 EnemyAircraft <|-- EliteEnemy
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + getScore():int
 }
 
 EnemyAircraft <|-- MobEnemy

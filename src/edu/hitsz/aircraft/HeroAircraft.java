@@ -90,8 +90,4 @@ public class HeroAircraft extends AbstractAircraft {
         }
         return res;
     }
-
-    public void increaseShootNum(int num) {
-        this.shootNum += num;
-    }
 }

@@ -3,8 +3,14 @@
 
 class HeroAircraft {
     - {static} heroAircraft: HeroAircraft
+    - shootNum: int
+    - power: int
+    - direction: int
     - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + {static} getHeroAircraft(): HeroAircraft
+    + increaseHp(int increase): void
+    + forward(): void
+    + shoot(): List<BaseBullet>
 }
 
 HeroAircraft <-- HeroAircraft

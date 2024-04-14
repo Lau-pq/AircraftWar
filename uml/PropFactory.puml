@@ -9,6 +9,8 @@ abstract class AbstractProp
 {
     + AbstractProp(int locationX, int locationY,
     int speedX, int speedY)
+    + forward(): void
+    + {abstract} activate(HeroAircraft heroAircraft): void
 }
 
 PropFactory ..> AbstractProp
@@ -33,8 +35,10 @@ class BulletPropFactory {
 PropFactory <|.. BulletPropFactory
 
 class BloodProp {
+    - recoverHp: int
     + BloodProp(int locationX, int locationY,
     int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft): void
 }
 
 AbstractProp <|-- BloodProp
@@ -42,6 +46,7 @@ AbstractProp <|-- BloodProp
 class BombProp {
     + BombProp(int locationX, int locationY,
     int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft): void
 }
 
 AbstractProp <|-- BombProp
@@ -49,6 +54,7 @@ AbstractProp <|-- BombProp
 class BulletProp {
     + BulletProp(int locationX, int locationY,
     int speedX, int speedY)
+    + activate(HeroAircraft heroAircraft): void
 }
 
 AbstractProp <|-- BulletProp
