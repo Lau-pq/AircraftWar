@@ -34,6 +34,9 @@ public class HeroAircraft extends AbstractAircraft {
      */
     private int direction = -1;
 
+    // 子弹发射频率
+    private int shootTime = 600;
+
     /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
@@ -89,5 +92,10 @@ public class HeroAircraft extends AbstractAircraft {
             res.add(bullet);
         }
         return res;
+    }
+
+    @Override
+    public int getShootTime() {
+        return shootTime;
     }
 }

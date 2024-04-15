@@ -1,7 +1,13 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.factory.BloodPropFactory;
+import edu.hitsz.factory.BombPropFactory;
+import edu.hitsz.factory.BulletPropFactory;
+import edu.hitsz.factory.PropFactory;
+import edu.hitsz.prop.AbstractProp;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class EnemyAircraft extends AbstractAircraft{
@@ -13,4 +19,7 @@ public abstract class EnemyAircraft extends AbstractAircraft{
     @Override
     public abstract List<BaseBullet> shoot();
     public abstract int getScore();
+    public abstract List<AbstractProp> dropProp();
+    @Override
+    public abstract int getShootTime();
 }

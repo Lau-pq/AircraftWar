@@ -2,7 +2,9 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.prop.AbstractProp;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
 public class MobEnemy extends EnemyAircraft {
 
     private int score = 10;
+    private int shootTime = 600;
+
     public MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
@@ -23,7 +27,7 @@ public class MobEnemy extends EnemyAircraft {
     public void forward() {
         super.forward();
         // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT ) {
+        if (locationY >= Main.WINDOW_HEIGHT) {
             vanish();
         }
     }
@@ -36,5 +40,15 @@ public class MobEnemy extends EnemyAircraft {
     @Override
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public List<AbstractProp> dropProp() {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public int getShootTime() {
+        return shootTime;
     }
 }

@@ -44,6 +44,8 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      */
     public abstract List<BaseBullet> shoot();
 
+    public abstract int getShootTime();
+
 }
 
 

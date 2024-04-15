@@ -5,9 +5,6 @@ import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BloodProp;
-import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -51,6 +48,10 @@ public class Game extends JPanel {
      * 当前得分
      */
     private int score = 0;
+
+    // BOSS机 出现阈值
+    private int threshold = 500;
+
     /**
      * 当前时刻
      */
@@ -105,17 +106,26 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
+                    if (score != 0 && score > threshold && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
+                        BossEnemyFactory bossEnemyFactory = new BossEnemyFactory();
+                        enemyAircrafts.add(bossEnemyFactory.createAircraft());
+                        threshold += 500;
+                    }
                     if (Math.random() < 0.5) {
                         MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
                         enemyAircrafts.add(mobEnemyFactory.createAircraft());
-                    } else {
+                    } else if (Math.random() < 0.75){
                         EliteEnemyFactory eliteEnemyFactory = new EliteEnemyFactory();
                         enemyAircrafts.add(eliteEnemyFactory.createAircraft());
+                    } else {
+                        ElitePlusEnemyFactory elitePlusEnemyFactory = new ElitePlusEnemyFactory();
+                        enemyAircrafts.add(elitePlusEnemyFactory.createAircraft());
                     }
                 }
-                // 飞机射出子弹
-                shootAction();
             }
+
+            // 飞机射出子弹
+            shootAction();
 
             // 子弹移动
             bulletsMoveAction();
@@ -171,10 +181,14 @@ public class Game extends JPanel {
     private void shootAction() {
         // TODO 敌机射击
         for (EnemyAircraft enemyAircraft : enemyAircrafts) {
-            enemyBullets.addAll(enemyAircraft.shoot());
+            if (time % enemyAircraft.getShootTime() == 0) {
+                enemyBullets.addAll(enemyAircraft.shoot());
+            }
         }
-        // 英雄射击
-        heroBullets.addAll(heroAircraft.shoot());
+        if (time % heroAircraft.getShootTime() == 0) {
+            // 英雄射击
+            heroBullets.addAll(heroAircraft.shoot());
+        }
     }
 
     private void bulletsMoveAction() {
@@ -237,28 +251,7 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
                         score += enemyAircraft.getScore();
-                        if (enemyAircraft instanceof EliteEnemy) {
-                            int rand = (int)(Math.random() * 100) + 1; // [1, 100]
-                            int bloodProb = 30;
-                            int bombProb = 60;
-                            int bulletProb = 90;
-                            if (rand <= bloodProb) {
-                                BloodPropFactory bloodPropFactory = new BloodPropFactory();
-                                props.add(bloodPropFactory.createProp(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY()));
-                            } else if (rand <= bombProb) {
-                                BombPropFactory bombPropFactory = new BombPropFactory();
-                                props.add(bombPropFactory.createProp(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY()));
-                            } else if (rand <= bulletProb) {
-                                BulletPropFactory bulletProp =new BulletPropFactory();
-                                props.add(bulletProp.createProp(
-                                        enemyAircraft.getLocationX(),
-                                        enemyAircraft.getLocationY()));
-                            }
-                        }
+                        props.addAll(enemyAircraft.dropProp());
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁
