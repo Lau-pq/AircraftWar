@@ -29,10 +29,10 @@ public class BossEnemy extends EnemyAircraft {
     /**
      * 子弹射击方向 (向上发射：1，向下发射：-1)
      */
-    private int direction = 1;
+    private int direction = -1;
 
     // 子弹发射频率
-    private int shootTime = 2400;
+    private int shootTime = 1600;
     // 得分
     private int score = 100;
 
@@ -62,17 +62,19 @@ public class BossEnemy extends EnemyAircraft {
         List<BaseBullet> res = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
+        int speed = 10;
         double r = Main.WINDOW_WIDTH * 0.3;
         BaseBullet bullet;
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
             // 多个子弹横向分散
+            double theta = 2 * Math.PI * i / shootNum;
             bullet = new EnemyBullet(
-                    (int) (x + r * Math.cos((2 * Math.PI * i / shootNum))),
-                    (int) (y + r * Math.sin((2 * Math.PI * i / shootNum))),
-                    speedX, speedY, power);
+                    (int) (x + r * Math.cos(theta)),
+                    (int) (y + r * Math.sin(theta)),
+                    (int) (speed * Math.cos(theta)),
+                    (int) (speed * Math.sin(theta)),
+                    power);
             res.add(bullet);
         }
         return res;
