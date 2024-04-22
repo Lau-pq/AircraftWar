@@ -50,7 +50,7 @@ public class Game extends JPanel {
     private int score = 0;
 
     // BOSS机 出现阈值
-    private int threshold = 500;
+    private int bossThreshold = 500;
 
     /**
      * 当前时刻
@@ -106,10 +106,9 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
-                    if (score != 0 && score > threshold && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
+                    if (score >= bossThreshold && score % bossThreshold < 50 && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
                         BossEnemyFactory bossEnemyFactory = new BossEnemyFactory();
                         enemyAircrafts.add(bossEnemyFactory.createAircraft());
-                        threshold += 500;
                     }
                     if (Math.random() < 0.5) {
                         MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
