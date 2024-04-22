@@ -12,6 +12,6 @@ public class BossEnemyFactory implements AircraftFactory {
         return new BossEnemy(
                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                 (int) (Main.WINDOW_HEIGHT * 0.2),
-                5, 0, 150);
+                5, 0, 300);
     }
 }
