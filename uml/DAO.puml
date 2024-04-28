@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Record{
+    - name:String
+    - score:int
+    - time:String
+    + Record(String name,int score,String time)
+    + getScore():int
+    + toString():String
+}
+
+RecordDaoImpl --> Record
+
+Interface RecordDao{
+    + {abstract} getAllRecords():List<Record>
+    + {abstract} addRecord(Record record):void
+    + {abstract} deleteRecords(String name):void
+    + {abstract} sortRecords():void
+    + {abstract} readRecords():void
+    + {abstract} saveRecords(Record record):void
+    + {abstract} cleanRecords():void
+    + {abstract} printRecords():void
+}
+
+class RecordDaoImpl{
+    - recordList:List<Record>
+    - filePath:Path
+    + RecordDaoImpl(Path filepath)
+    + getAllRecords():List<Record>
+    + addRecord(Record record):void
+    + deleteRecords(String name):void
+    + sortRecords():void
+    + readRecords():void
+    + saveRecords(Record record):void
+    + cleanRecords():void
+    + printRecords():void
+}
+RecordDao <|.. RecordDaoImpl
+
+@enduml
