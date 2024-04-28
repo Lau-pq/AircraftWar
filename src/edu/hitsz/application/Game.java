@@ -1,5 +1,7 @@
 package edu.hitsz.application;
 
+import edu.hitsz.DAO.Record;
+import edu.hitsz.DAO.RecordDaoImpl;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -10,6 +12,10 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -69,6 +75,11 @@ public class Game extends JPanel {
      */
     private boolean gameOverFlag = false;
 
+    /**
+     * ranking list
+     */
+    private RecordDaoImpl userDaoImpl;
+
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
 
@@ -106,7 +117,7 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
-                    if (score >= bossThreshold && score % bossThreshold < 50 && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
+                    if (score >= bossThreshold && score % bossThreshold <= 50 && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
                         BossEnemyFactory bossEnemyFactory = new BossEnemyFactory();
                         enemyAircrafts.add(bossEnemyFactory.createAircraft());
                     }
@@ -149,6 +160,12 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
+                userDaoImpl = new RecordDaoImpl(Path.of("record.txt"));
+                if (new File("record.txt").exists()) {
+                    userDaoImpl.readRecords();
+                }
+                userDaoImpl.saveRecord(new Record("testUserName", score,
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
                 System.out.println("Game Over!");
             }
 

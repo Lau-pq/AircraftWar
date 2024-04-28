@@ -4,6 +4,7 @@ import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.strategy.StraightShootStrategy;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.LinkedList;
@@ -17,26 +18,6 @@ import java.util.List;
 public class HeroAircraft extends AbstractAircraft {
     private volatile static HeroAircraft heroAircraft;
 
-    /**攻击方式 */
-
-    /**
-     * 子弹一次发射数量
-     */
-    private int shootNum = 1;
-
-    /**
-     * 子弹伤害
-     */
-    private int power = 30;
-
-    /**
-     * 子弹射击方向 (向上发射：1，向下发射：-1)
-     */
-    private int direction = -1;
-
-    // 子弹发射频率
-    private int shootTime = 600;
-
     /**
      * @param locationX 英雄机位置x坐标
      * @param locationY 英雄机位置y坐标
@@ -46,6 +27,10 @@ public class HeroAircraft extends AbstractAircraft {
      */
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
+        this.shootNum = 1;
+        this.power = 30;
+        this.direction = -1;
+        this.shootTime = 600;
     }
 
     public static HeroAircraft getHeroAircraft() {
@@ -58,6 +43,7 @@ public class HeroAircraft extends AbstractAircraft {
                 }
             }
         }
+        heroAircraft.setShootStrategy(new StraightShootStrategy());
         return heroAircraft;
     }
 
@@ -73,29 +59,8 @@ public class HeroAircraft extends AbstractAircraft {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
 
-    @Override
-    /**
-     * 通过射击产生子弹
-     * @return 射击出的子弹List
-     */
-    public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction*2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
-        BaseBullet bullet;
-        for(int i=0; i<shootNum; i++){
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            bullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
-            res.add(bullet);
-        }
-        return res;
+    public void setShootNum(int shootNum) {
+        this.shootNum = shootNum;
     }
 
-    @Override
-    public int getShootTime() {
-        return shootTime;
-    }
 }
