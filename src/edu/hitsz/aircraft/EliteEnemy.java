@@ -12,4 +12,5 @@ public class EliteEnemy extends EnemyAircraft{
         this.score = 30;
         this.propNum = 1;
     }
+
 }

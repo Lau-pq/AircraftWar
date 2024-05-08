@@ -1,3 +1,0 @@
-testUserName,30,2024-04-28 22:19
-testUserName,130,2024-04-28 22:20
-testUserName,0,2024-04-28 22:21

@@ -63,4 +63,8 @@ public class HeroAircraft extends AbstractAircraft {
         this.shootNum = shootNum;
     }
 
+    public void reset() {
+        heroAircraft = null;
+    }
+
 }

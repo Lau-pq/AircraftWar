@@ -5,6 +5,7 @@ import edu.hitsz.aircraft.EnemyAircraft;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.strategy.StraightShootStrategy;
 
 import java.util.List;
 
@@ -29,5 +30,6 @@ public abstract class AbstractProp extends AbstractFlyingObject {
     }
 
     public abstract void activate(HeroAircraft heroAircraft);
+
 }
 

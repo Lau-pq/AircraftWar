@@ -1,8 +1,14 @@
-package edu.hitsz.application;
+package edu.hitsz.Game;
 
 import edu.hitsz.DAO.Record;
+import edu.hitsz.DAO.RecordDao;
 import edu.hitsz.DAO.RecordDaoImpl;
+import edu.hitsz.Swing.RankingBoard;
+import edu.hitsz.Swing.StartMenu;
 import edu.hitsz.aircraft.*;
+import edu.hitsz.application.HeroController;
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.factory.*;
@@ -76,9 +82,29 @@ public class Game extends JPanel {
     private boolean gameOverFlag = false;
 
     /**
-     * ranking list
+     * 游戏图片图片
      */
-    private RecordDaoImpl userDaoImpl;
+    protected BufferedImage background;
+
+    /**
+     * 游戏难度
+     */
+    protected int level;
+
+    /**
+     * 数据库
+     */
+    private RecordDao recordDao;
+
+    /**
+     * 名字是否有效
+     */
+    boolean validName = false;
+
+    /**
+     * 名字
+     */
+    String userName;
 
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
@@ -158,17 +184,28 @@ public class Game extends JPanel {
             // 游戏结束检查英雄机是否存活
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
+                while (!validName) {
+                    userName = JOptionPane.showInputDialog(null, "游戏结束，您的得分是 %d，请输入用户名：".formatted(score));
+                    Object[] options = {"确认"};
+                    if (Objects.equals(userName, "")) {
+                        JOptionPane.showOptionDialog(null, "您还没有输入 ", "提示", JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                    } else {
+                        validName = true;
+                    }
+                }
                 executorService.shutdown();
                 gameOverFlag = true;
-                userDaoImpl = new RecordDaoImpl(Path.of("record.txt"));
-                if (new File("record.txt").exists()) {
-                    userDaoImpl.readRecords();
-                }
-                userDaoImpl.saveRecord(new Record("testUserName", score,
+                heroAircraft.reset();
+                recordDao = new RecordDaoImpl(level);
+                recordDao.getAllRecords();
+                recordDao.saveRecord(new Record(userName, score,
                         LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+                Main.cardPanel.add(new StartMenu().getMainPanel(), "start");
+                Main.cardPanel.add(new RankingBoard(level).getMainPanel(), "RankingBoard");
+                Main.cardLayout.show(Main.cardPanel, "RankingBoard");
                 System.out.println("Game Over!");
             }
-
         };
 
         /**
@@ -320,8 +357,8 @@ public class Game extends JPanel {
         super.paint(g);
 
         // 绘制背景,图片滚动
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop, null);
+        g.drawImage(background, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+        g.drawImage(background, 0, this.backGroundTop, null);
         this.backGroundTop += 1;
         if (this.backGroundTop == Main.WINDOW_HEIGHT) {
             this.backGroundTop = 0;

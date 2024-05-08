@@ -13,8 +13,16 @@ public class Record implements Serializable {
         this.time = time;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getScore() {
         return score;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     @Override

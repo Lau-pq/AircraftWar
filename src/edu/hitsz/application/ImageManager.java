@@ -6,8 +6,8 @@ import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
-import edu.hitsz.prop.BulletPlusProp;
-import edu.hitsz.prop.BulletProp;
+import edu.hitsz.prop.RingBulletProp;
+import edu.hitsz.prop.ScatterBulletProp;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -30,7 +30,9 @@ public class ImageManager {
      */
     private static final Map<String, BufferedImage> CLASSNAME_IMAGE_MAP = new HashMap<>();
 
-    public static BufferedImage BACKGROUND_IMAGE;
+    public static BufferedImage BACKGROUND_IMAGE1;
+    public static BufferedImage BACKGROUND_IMAGE2;
+    public static BufferedImage BACKGROUND_IMAGE3;
     public static BufferedImage HERO_IMAGE;
     public static BufferedImage HERO_BULLET_IMAGE;
     public static BufferedImage ENEMY_BULLET_IMAGE;
@@ -46,8 +48,9 @@ public class ImageManager {
 
     static {
         try {
-
-            BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/images/bg.jpg"));
+            BACKGROUND_IMAGE1 = ImageIO.read(new FileInputStream("src/images/bg.jpg"));
+            BACKGROUND_IMAGE2 = ImageIO.read(new FileInputStream("src/images/bg3.jpg"));
+            BACKGROUND_IMAGE3 = ImageIO.read(new FileInputStream("src/images/bg5.jpg"));
 
             HERO_IMAGE = ImageIO.read(new FileInputStream("src/images/hero.png"));
             MOB_ENEMY_IMAGE = ImageIO.read(new FileInputStream("src/images/mob.png"));
@@ -71,8 +74,8 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(EnemyBullet.class.getName(), ENEMY_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BloodProp.class.getName(), BLOOD_PROP_IMAGE);
             CLASSNAME_IMAGE_MAP.put(BombProp.class.getName(), BOMB_PROP_IMAGE);
-            CLASSNAME_IMAGE_MAP.put(BulletProp.class.getName(), BULLET_PROP_IMAGE);
-            CLASSNAME_IMAGE_MAP.put(BulletPlusProp.class.getName(), ELITEBULLTE_PROP_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(ScatterBulletProp.class.getName(), BULLET_PROP_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(RingBulletProp.class.getName(), ELITEBULLTE_PROP_IMAGE);
 
         } catch (IOException e) {
             e.printStackTrace();
