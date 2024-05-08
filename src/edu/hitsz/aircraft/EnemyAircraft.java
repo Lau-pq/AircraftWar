@@ -28,13 +28,13 @@ public abstract class EnemyAircraft extends AbstractAircraft{
         int y = this.getLocationY();
         PropFactory propFactory = null;
         for (int i = 0; i < propNum; i++) {
-            if (Math.random() <= 0) {
+            if (Math.random() <= 0.2) {
                 propFactory = new BloodPropFactory();
-            } else if (Math.random() <= 0) {
+            } else if (Math.random() <= 0.4) {
                 propFactory = new BombPropFactory();
-            } else if (Math.random() <= 0.5) {
+            } else if (Math.random() <= 0.65) {
                 propFactory = new ScatterBulletPropFactory();
-            } else if (Math.random() <= 1.0) {
+            } else if (Math.random() <= 0.9) {
                 propFactory = new RingBulletPropFactory();
             }
             if (propFactory != null) {
