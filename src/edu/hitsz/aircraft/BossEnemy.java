@@ -1,14 +1,8 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EnemyBullet;
-import edu.hitsz.factory.*;
-import edu.hitsz.prop.AbstractProp;
 
-import java.util.LinkedList;
-import java.util.List;
+import edu.hitsz.application.MusicController;
+import edu.hitsz.application.MusicManager;
 
 public class BossEnemy extends EnemyAircraft {
 
@@ -20,6 +14,7 @@ public class BossEnemy extends EnemyAircraft {
         this.shootTime = 1600;
         this.score = 100;
         this.propNum = 3;
+        MusicManager.action("boss");
     }
 
 }

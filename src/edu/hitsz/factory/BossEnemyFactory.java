@@ -13,7 +13,7 @@ public class BossEnemyFactory implements AircraftFactory {
         EnemyAircraft bossEnemy = new BossEnemy(
                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                 (int) (Main.WINDOW_HEIGHT * 0.2),
-                5, 0, 1000);
+                5, 0, 300);
         bossEnemy.setShootStrategy(new RingShootStrategy());
         return bossEnemy;
     }

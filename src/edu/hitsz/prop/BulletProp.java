@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.application.MusicManager;
 import edu.hitsz.strategy.ShootStrategy;
 import edu.hitsz.strategy.StraightShootStrategy;
 
@@ -12,12 +13,13 @@ public class BulletProp extends AbstractProp {
     private static Thread currentThread;
     protected int shootNum;
     protected ShootStrategy shootStrategy;
+    protected int activeTime;
 
     public void recoverStraightShoot (HeroAircraft heroAircraft) {
         // 恢复单射
         Runnable r = () -> {
             try {
-                Thread.sleep(4000); // 4s
+                Thread.sleep(activeTime);
                 heroAircraft.setShootNum(1);
                 heroAircraft.setShootStrategy(new StraightShootStrategy());
             } catch (InterruptedException ignored) {
@@ -36,6 +38,7 @@ public class BulletProp extends AbstractProp {
         heroAircraft.setShootStrategy(shootStrategy);
         recoverStraightShoot(heroAircraft);
         System.out.println("FireSupply active!");
+        MusicManager.action("supply");
     }
 
 

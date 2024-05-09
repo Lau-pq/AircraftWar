@@ -8,6 +8,7 @@ public class ScatterBulletProp extends BulletProp {
         super(locationX, locationY, speedX, speedY);
         this.shootNum = 3;
         this.shootStrategy = new ScatterShootStrategy();
+        this.activeTime = 5000;
     }
 
 }

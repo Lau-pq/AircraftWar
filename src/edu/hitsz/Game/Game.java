@@ -6,9 +6,7 @@ import edu.hitsz.DAO.RecordDaoImpl;
 import edu.hitsz.Swing.RankingBoard;
 import edu.hitsz.Swing.StartMenu;
 import edu.hitsz.aircraft.*;
-import edu.hitsz.application.HeroController;
-import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
+import edu.hitsz.application.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.factory.*;
@@ -102,9 +100,9 @@ public class Game extends JPanel {
     boolean validName = false;
 
     /**
-     * 名字
+     * 用户名
      */
-    String userName;
+    private String userName;
 
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
@@ -184,27 +182,10 @@ public class Game extends JPanel {
             // 游戏结束检查英雄机是否存活
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
-                while (!validName) {
-                    userName = JOptionPane.showInputDialog(null, "游戏结束，您的得分是 %d，请输入用户名：".formatted(score));
-                    Object[] options = {"确认"};
-                    if (Objects.equals(userName, "")) {
-                        JOptionPane.showOptionDialog(null, "您还没有输入 ", "提示", JOptionPane.DEFAULT_OPTION,
-                                JOptionPane.WARNING_MESSAGE,null, options, options[0]);
-                    } else {
-                        validName = true;
-                    }
-                }
                 executorService.shutdown();
                 gameOverFlag = true;
-                heroAircraft.reset();
-                recordDao = new RecordDaoImpl(level);
-                recordDao.getAllRecords();
-                recordDao.saveRecord(new Record(userName, score,
-                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
-                Main.cardPanel.add(new StartMenu().getMainPanel(), "start");
-                Main.cardPanel.add(new RankingBoard(level).getMainPanel(), "RankingBoard");
-                Main.cardLayout.show(Main.cardPanel, "RankingBoard");
                 System.out.println("Game Over!");
+                gameOver();
             }
         };
 
@@ -213,7 +194,7 @@ public class Game extends JPanel {
          * 本次任务执行完成后，需要延迟设定的延迟时间，才会执行新的任务
          */
         executorService.scheduleWithFixedDelay(task, timeInterval, timeInterval, TimeUnit.MILLISECONDS);
-
+        MusicManager.action("begin");
     }
 
     //***********************
@@ -299,9 +280,11 @@ public class Game extends JPanel {
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
+                    MusicManager.action("hit");
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
+                        if(enemyAircraft instanceof BossEnemy) MusicManager.action("boss_defeated");
                         // TODO 获得分数，产生道具补给
                         score += enemyAircraft.getScore();
                         props.addAll(enemyAircraft.dropProp());
@@ -402,5 +385,26 @@ public class Game extends JPanel {
         g.drawString("LIFE:" + this.heroAircraft.getHp(), x, y);
     }
 
+    private void gameOver() {
+        MusicManager.action("over");
+        while (!validName) {
+            userName = JOptionPane.showInputDialog(null, "游戏结束，您的得分是 %d，请输入用户名：".formatted(score));
+            Object[] options = {"确认"};
+            if (Objects.equals(userName, "")) {
+                JOptionPane.showOptionDialog(null, "您还没有输入 ", "提示", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+            } else {
+                validName = true;
+            }
+        }
+        heroAircraft.reset();
+        recordDao = new RecordDaoImpl(level);
+        recordDao.getAllRecords();
+        recordDao.saveRecord(new Record(userName, score,
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+        Main.cardPanel.add(new StartMenu().getMainPanel(), "start");
+        Main.cardPanel.add(new RankingBoard(level).getMainPanel(), "RankingBoard");
+        Main.cardLayout.show(Main.cardPanel, "RankingBoard");
+    }
 
 }

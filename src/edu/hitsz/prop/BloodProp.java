@@ -3,6 +3,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.application.MusicManager;
 
 /**
  * Blood
@@ -21,5 +22,6 @@ public class BloodProp extends AbstractProp {
     public void activate(HeroAircraft heroAircraft) {
         heroAircraft.increaseHp(this.recoverHp);
         System.out.println("BloodSupply active!");
+        MusicManager.action("supply");
     }
 }

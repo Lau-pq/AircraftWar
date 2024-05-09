@@ -4,8 +4,12 @@ import edu.hitsz.Game.EasyGame;
 import edu.hitsz.Game.HardGame;
 import edu.hitsz.Game.MediumGame;
 import edu.hitsz.application.Main;
+import edu.hitsz.application.MusicManager;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Setting {
     private JPanel MainPanel;
     private JPanel difficulty;
@@ -13,9 +17,9 @@ public class Setting {
     private JButton easyButton;
     private JButton mediumButton;
     private JButton hardButton;
-    private JComboBox musicComboBox;
     private JLabel soundLabel;
     private JButton returnButton;
+    private JCheckBox musicCheckBox;
 
     public JPanel getMainPanel() {
         return MainPanel;
@@ -40,6 +44,8 @@ public class Setting {
         actionButton(hardButton);
 
         returnButton.addActionListener(e -> Main.cardLayout.show(Main.cardPanel, "start"));
+
+        musicCheckBox.addActionListener(e -> MusicManager.isActive = musicCheckBox.isSelected());
     }
 
     public static void main(String[] args) {
