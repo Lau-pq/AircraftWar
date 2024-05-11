@@ -95,7 +95,7 @@ public class MusicController {
         dataLine.close();
     }
 
-    public void startPlaybackThread() {{
+    public void startThread() {{
             Runnable r = () -> {
                 do {
                     InputStream stream = new ByteArrayInputStream(samples);

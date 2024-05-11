@@ -39,24 +39,30 @@ public class MusicManager {
                 case "boss" -> bossMusicController = loopPlay(SOURCE_PATH);
                 case "bomb", "bullet", "hit", "supply" -> play(SOURCE_PATH);
                 case "boss_defeated" -> {
-                    if (bossMusicController != null) bossMusicController.stop();
+                    stop(bossMusicController);
                 }
                 case "over" -> {
-                    if (bgmMusicController != null) bgmMusicController.stop();
+                    stop(bgmMusicController);
+                    stop(bossMusicController);
                 }
             }
         }
 
     }
 
+
     private static void play(String fileName) {
-        new MusicController(fileName, false).startPlaybackThread();
+        new MusicController(fileName, false).startThread();
     }
 
     private static MusicController loopPlay(String fileName) {
         MusicController musicController = new MusicController(fileName, true);
-        musicController.startPlaybackThread();
+        musicController.startThread();
         return musicController;
+    }
+
+    private static void stop(MusicController musicController) {
+        if (musicController != null) musicController.stop();
     }
 
 }
