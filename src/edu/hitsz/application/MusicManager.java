@@ -42,6 +42,7 @@ public class MusicManager {
                     stop(bossMusicController);
                 }
                 case "over" -> {
+                    play(SOURCE_PATH);
                     stop(bgmMusicController);
                     stop(bossMusicController);
                 }
