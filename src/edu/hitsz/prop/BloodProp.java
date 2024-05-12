@@ -12,7 +12,7 @@ import edu.hitsz.application.MusicManager;
  * @author Lpq
  */
 public class BloodProp extends AbstractProp {
-    private int recoverHp = 30;
+    private int recoverHp = 0;
 
     public BloodProp(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
@@ -20,6 +20,7 @@ public class BloodProp extends AbstractProp {
 
     @Override
     public void activate(HeroAircraft heroAircraft) {
+        recoverHp = (int)(heroAircraft.getLoseHp() * 0.2); // 已损生命值 20%
         heroAircraft.increaseHp(this.recoverHp);
         System.out.println("BloodSupply active!");
         MusicManager.action("supply");
