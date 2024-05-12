@@ -21,9 +21,9 @@ public class RecordDaoImpl implements RecordDao {
 
     public RecordDaoImpl(int level) {
         switch (level) {
-            case 1 -> this.filepath = Path.of("recordEasy.txt");
-            case 2 -> this.filepath = Path.of("recordMedium.txt");
-            case 3 -> this.filepath = Path.of("recordHard.txt");
+            case 1 -> this.filepath = Path.of("src/database/easyRecord.txt");
+            case 2 -> this.filepath = Path.of("src/database/mediumRecord.txt");
+            case 3 -> this.filepath = Path.of("src/database/hardRecord.txt");
             default -> this.filepath = null;
         }
     }
