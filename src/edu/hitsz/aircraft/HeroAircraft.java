@@ -54,6 +54,14 @@ public class HeroAircraft extends AbstractAircraft {
         }
     }
 
+    public int getHp() {
+        return hp;
+    }
+
+    public int getLoseHp() {
+        return maxHp - hp;
+    }
+
     @Override
     public void forward() {
         // 英雄机由鼠标控制，不通过forward函数移动
