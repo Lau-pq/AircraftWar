@@ -14,7 +14,6 @@ public class BossEnemy extends EnemyAircraft {
         this.shootTime = 1600;
         this.score = 100;
         this.propNum = 3;
-        MusicManager.action("boss");
     }
 
 }

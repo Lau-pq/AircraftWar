@@ -141,10 +141,6 @@ public class Game extends JPanel {
                 System.out.println(time);
                 // 新敌机产生
                 if (enemyAircrafts.size() < enemyMaxNumber) {
-                    if (score >= bossThreshold && score % bossThreshold <= 50 && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
-                        BossEnemyFactory bossEnemyFactory = new BossEnemyFactory();
-                        enemyAircrafts.add(bossEnemyFactory.createAircraft());
-                    }
                     if (Math.random() < 0.5) {
                         MobEnemyFactory mobEnemyFactory = new MobEnemyFactory();
                         enemyAircrafts.add(mobEnemyFactory.createAircraft());
@@ -155,6 +151,11 @@ public class Game extends JPanel {
                         ElitePlusEnemyFactory elitePlusEnemyFactory = new ElitePlusEnemyFactory();
                         enemyAircrafts.add(elitePlusEnemyFactory.createAircraft());
                     }
+                }
+                if (score >= bossThreshold && score % bossThreshold <= 100 && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
+                    BossEnemyFactory bossEnemyFactory = new BossEnemyFactory();
+                    enemyAircrafts.add(bossEnemyFactory.createAircraft());
+                    MusicManager.action("boss");
                 }
             }
 
