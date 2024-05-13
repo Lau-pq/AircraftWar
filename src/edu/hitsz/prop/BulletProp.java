@@ -18,9 +18,9 @@ public abstract class BulletProp extends AbstractProp {
 
     private static synchronized void changeBulletProp(String event) {
         switch (event) {
-            case "increase" : bulletPropNum += 1;
-            case "decrease" : bulletPropNum -= 1;
-            default:
+            case "increase" -> bulletPropNum += 1;
+            case "decrease" -> bulletPropNum -= 1;
+            default -> {}
         }
     }
 
