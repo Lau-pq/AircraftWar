@@ -155,7 +155,6 @@ public class Game extends JPanel {
                 if (score >= bossThreshold && score % bossThreshold <= 100 && enemyAircrafts.stream().filter(x -> x instanceof BossEnemy).toList().isEmpty()) {
                     BossEnemyFactory bossEnemyFactory = new BossEnemyFactory();
                     enemyAircrafts.add(bossEnemyFactory.createAircraft());
-                    MusicManager.action("boss");
                 }
             }
 
@@ -285,7 +284,6 @@ public class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
-                        if(enemyAircraft instanceof BossEnemy) MusicManager.action("boss_defeated");
                         // TODO 获得分数，产生道具补给
                         score += enemyAircraft.getScore();
                         props.addAll(enemyAircraft.dropProp());
