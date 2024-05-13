@@ -13,4 +13,9 @@ public class ElitePlusEnemy extends EnemyAircraft{
         this.score = 50;
         this.propNum = 1;
     }
+
+    @Override
+    public void update() {
+        this.decreaseHp(this.getHp() - 1);
+    }
 }

@@ -1,13 +1,14 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
+import edu.hitsz.basic.FlyingsObserver;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class EnemyAircraft extends AbstractAircraft{
+public abstract class EnemyAircraft extends AbstractAircraft implements FlyingsObserver {
     // 得分
     protected int score;
 

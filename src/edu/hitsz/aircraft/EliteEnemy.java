@@ -13,4 +13,8 @@ public class EliteEnemy extends EnemyAircraft{
         this.propNum = 1;
     }
 
+    @Override
+    public void update() {
+        this.vanish();
+    }
 }

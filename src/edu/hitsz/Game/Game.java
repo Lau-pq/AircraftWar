@@ -7,10 +7,13 @@ import edu.hitsz.Swing.RankingBoard;
 import edu.hitsz.Swing.StartMenu;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.application.*;
+import edu.hitsz.basic.FlyingsObserver;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.factory.*;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.prop.BombProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -303,6 +306,14 @@ public class Game extends JPanel {
                 continue;
             }
             if (heroAircraft.crash(prop) || prop.crash(heroAircraft)) {
+                if (prop instanceof BombProp) {
+                    for (EnemyAircraft enemyAircraft : enemyAircrafts) {
+                        ((BombProp) prop).addflyingsObserver(enemyAircraft);
+                    }
+                    for (BaseBullet bullet: enemyBullets) {
+                        ((BombProp) prop).addflyingsObserver((FlyingsObserver) bullet);
+                    }
+                }
                 prop.activate(heroAircraft);
                 prop.vanish();
             }

@@ -14,4 +14,9 @@ public class MobEnemy extends EnemyAircraft {
         this.shootNum = 0;
         this.shootTime = 600;
     }
+
+    @Override
+    public void update() {
+        this.vanish();
+    }
 }

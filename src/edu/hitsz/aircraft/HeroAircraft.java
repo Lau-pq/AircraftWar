@@ -54,10 +54,6 @@ public class HeroAircraft extends AbstractAircraft {
         }
     }
 
-    public int getHp() {
-        return hp;
-    }
-
     public int getLoseHp() {
         return maxHp - hp;
     }
