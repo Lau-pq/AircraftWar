@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 
-public class ElitePlusEnemy extends EnemyAircraft{
+public class ElitePlusEnemy extends EnemyAircraft {
 
     public ElitePlusEnemy(int locationX, int locationY, double speedX, double speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);

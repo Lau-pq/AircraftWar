@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.Game.Game;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.FlyingsObserver;
 import edu.hitsz.factory.*;
@@ -15,6 +16,9 @@ public abstract class EnemyAircraft extends AbstractAircraft implements FlyingsO
     // 道具生成数量
     protected int propNum;
 
+    // 是否自然死亡
+    private boolean isNaturalDeath = true;
+
     public EnemyAircraft(int locationX, int locationY, double speedX, double speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
@@ -22,6 +26,15 @@ public abstract class EnemyAircraft extends AbstractAircraft implements FlyingsO
     public int getScore() {
         return score;
     }
+
+    public boolean getIsNaturalDeath() {
+        return isNaturalDeath;
+    }
+
+    public void setIsNaturalDeath(boolean isNaturalDeath) {
+        this.isNaturalDeath = isNaturalDeath;
+    }
+
 
     public List<AbstractProp> dropProp() {
         List<AbstractProp> props = new LinkedList<>();
@@ -55,4 +68,5 @@ public abstract class EnemyAircraft extends AbstractAircraft implements FlyingsO
             vanish();
         }
     }
+
 }

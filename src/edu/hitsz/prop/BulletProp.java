@@ -6,15 +6,16 @@ import edu.hitsz.strategy.ShootStrategy;
 import edu.hitsz.strategy.StraightShootStrategy;
 
 public abstract class BulletProp extends AbstractProp {
-    public BulletProp(int locationX, int locationY, int speedX, int speedY) {
-        super(locationX, locationY, speedX, speedY);
-    }
 
     protected int shootNum;
     protected ShootStrategy shootStrategy;
     protected int activeTime;
 
     private static int bulletPropNum = 0;
+
+    public BulletProp(int locationX, int locationY, double speedX, double speedY) {
+        super(locationX, locationY, speedX, speedY);
+    }
 
     private static synchronized void changeBulletProp(String event) {
         switch (event) {
@@ -33,10 +34,9 @@ public abstract class BulletProp extends AbstractProp {
                     heroAircraft.setShootNum(1);
                     heroAircraft.setShootStrategy(new StraightShootStrategy());
                 }
+                changeBulletProp("decrease");
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } finally {
-                changeBulletProp("decrease");
             }
         };
         new Thread(r).start();

@@ -34,15 +34,10 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public void deleteRecord(int row) {
-        records.remove(row);
-    }
-
-    @Override
     public void deleteRecords(int[] rows) {
         records = readRecords();
         for (int i = rows.length - 1; i >= 0; i--) {
-            deleteRecord(rows[i]);
+            records.remove(rows[i]);
         }
         updateRecords(records);
     }

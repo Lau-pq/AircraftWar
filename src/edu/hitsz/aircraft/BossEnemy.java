@@ -1,8 +1,5 @@
 package edu.hitsz.aircraft;
 
-
-import edu.hitsz.application.MusicController;
-import edu.hitsz.application.MusicManager;
 import edu.hitsz.basic.FlyingsObserver;
 
 public class BossEnemy extends EnemyAircraft implements FlyingsObserver {
@@ -15,17 +12,9 @@ public class BossEnemy extends EnemyAircraft implements FlyingsObserver {
         this.shootTime = 1600;
         this.score = 100;
         this.propNum = 3;
-        MusicManager.action("boss");
     }
 
     @Override
-    protected void postmortemAction() {
-        super.postmortemAction();
-        MusicManager.action("boss_defeated");
-    }
+    public void update() {}
 
-    @Override
-    public void update() {
-
-    }
 }

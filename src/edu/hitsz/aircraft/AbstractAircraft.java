@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author hitsz
  */
-public abstract class AbstractAircraft extends AbstractFlyingObject {
+public abstract class   AbstractAircraft extends AbstractFlyingObject {
     /**
      * 生命值
      */
@@ -47,35 +47,18 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         return hp;
     }
 
+    public int getMaxHp() {
+        return maxHp;
+    }
+
     public void decreaseHp(int decrease){
         hp -= decrease;
         if(hp <= 0){
-            postmortemAction();
+            hp=0;
+            vanish();
         }
     }
 
-    protected void postmortemAction() {
-        hp=0;
-        vanish();
-    }
-
-    /**
-     * 飞机射击方法，可射击对象必须实现
-     * @return
-     *  可射击对象需实现，返回子弹
-     *  非可射击对象空实现，返回null
-     */
-    public void setShootStrategy(ShootStrategy shootStrategy) {
-        this.shootStrategy = shootStrategy;
-    }
-
-    public List<BaseBullet> shoot() {
-        return shootStrategy.shootAction(this);
-    }
-
-    public int getShootTime() {
-        return shootTime;
-    }
     public int getShootNum() {
         return shootNum;
     }
@@ -87,6 +70,23 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     public int getDirection() {
         return direction;
     }
+
+    public int getShootTime() {
+        return shootTime;
+    }
+
+    public void setShootTime(int shootTime) {
+        this.shootTime = shootTime;
+    }
+
+    public void setShootStrategy(ShootStrategy shootStrategy) {
+        this.shootStrategy = shootStrategy;
+    }
+
+    public List<BaseBullet> shoot() {
+        return shootStrategy.shootAction(this);
+    }
+
 
 
 }

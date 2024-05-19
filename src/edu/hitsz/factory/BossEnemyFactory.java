@@ -9,12 +9,13 @@ import edu.hitsz.strategy.RingShootStrategy;
 
 public class BossEnemyFactory implements AircraftFactory {
     @Override
-    public EnemyAircraft createAircraft() {
+    public EnemyAircraft createAircraft(int hp, int shootTime) {
         EnemyAircraft bossEnemy = new BossEnemy(
                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                 (int) (Main.WINDOW_HEIGHT * 0.2),
-                5, 0, 600);
+                5, 0, hp);
         bossEnemy.setShootStrategy(new RingShootStrategy());
+        bossEnemy.setShootTime(shootTime);
         return bossEnemy;
     }
 }

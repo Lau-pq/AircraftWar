@@ -14,7 +14,7 @@ import edu.hitsz.application.MusicManager;
 public class BloodProp extends AbstractProp {
     private int recoverHp = 0;
 
-    public BloodProp(int locationX, int locationY, int speedX, int speedY) {
+    public BloodProp(int locationX, int locationY, double speedX, double speedY) {
         super(locationX, locationY, speedX, speedY);
     }
 

@@ -13,7 +13,6 @@ public interface RecordDao {
     void addRecord(Record record);
 
     // 删除数据
-    void deleteRecord(int row);
     void deleteRecords(int[] rows);
 
     // 对文件进行排序
@@ -26,7 +25,7 @@ public interface RecordDao {
     void saveRecord(Record record);
 
     // 更新文件中的数据
-    void updateRecords(List<Record> records) throws IOException;
+    void updateRecords(List<Record> records);
 
     // 清空本地数据库数据
     void cleanLocalRecords();

@@ -17,6 +17,7 @@ public class MobEnemy extends EnemyAircraft {
 
     @Override
     public void update() {
+        setIsNaturalDeath(false);
         this.vanish();
     }
 }

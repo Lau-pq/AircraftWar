@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombProp extends AbstractProp {
-    public BombProp(int locationX, int locationY, int speedX, int speedY) {
+    public BombProp(int locationX, int locationY, double speedX, double speedY) {
         super(locationX, locationY, speedX, speedY);
     }
 

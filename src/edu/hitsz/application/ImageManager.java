@@ -10,6 +10,7 @@ import edu.hitsz.prop.RingBulletProp;
 import edu.hitsz.prop.ScatterBulletProp;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -45,7 +46,6 @@ public class ImageManager {
     public static BufferedImage BULLET_PROP_IMAGE;
     public static BufferedImage ELITEBULLTE_PROP_IMAGE;
 
-
     static {
         try {
             BACKGROUND_IMAGE1 = ImageIO.read(new FileInputStream("src/images/bg.jpg"));
@@ -63,7 +63,6 @@ public class ImageManager {
             BOMB_PROP_IMAGE = ImageIO.read(new FileInputStream("src/images/prop_bomb.png"));
             BULLET_PROP_IMAGE = ImageIO.read(new FileInputStream("src/images/prop_bullet.png"));
             ELITEBULLTE_PROP_IMAGE = ImageIO.read(new FileInputStream("src/images/prop_bulletPlus.png"));
-
 
             CLASSNAME_IMAGE_MAP.put(HeroAircraft.class.getName(), HERO_IMAGE);
             CLASSNAME_IMAGE_MAP.put(MobEnemy.class.getName(), MOB_ENEMY_IMAGE);

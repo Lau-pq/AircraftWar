@@ -1,6 +1,5 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.Main;
 
 public class EliteEnemy extends EnemyAircraft{
     public EliteEnemy(int locationX, int locationY, double speedX, double speedY, int hp) {
@@ -15,6 +14,7 @@ public class EliteEnemy extends EnemyAircraft{
 
     @Override
     public void update() {
+        setIsNaturalDeath(false);
         this.vanish();
     }
 }
