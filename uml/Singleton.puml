@@ -2,15 +2,13 @@
 'https://plantuml.com/class-diagram
 
 class HeroAircraft {
-    - {static} heroAircraft: HeroAircraft
-    - shootNum: int
-    - power: int
-    - direction: int
-    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
-    + {static} getHeroAircraft(): HeroAircraft
-    + increaseHp(int increase): void
-    + forward(): void
-    + shoot(): List<BaseBullet>
+    - {static} heroAircraft:HeroAircraft
+    - HeroAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + {static} getHeroAircraft():HeroAircraft
+    + increaseHp(int increase):void
+    + getLoseHp():int
+    + setShootNum(int shootNum):void
+    + reset():void
 }
 
 HeroAircraft <-- HeroAircraft

@@ -1,0 +1,105 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:double
+    # speedY:double
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + getLocationX():int
+    + getLocationY():int
+    + setLocation(double locationX, double locationY):void
+    + getSpeedY():double
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # shootNum:int
+    # power:int
+    # direction:int
+    # shootTime:int
+    - shootStrategy:ShootStrategy
+    + AbstractAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + getHp():int
+    + getMaxHp():int
+    + decreaseHp(int decrease):void
+    + getShootNum():int
+    + getPower():int
+    + getDirection():int
+    + getShootTime():int
+    + setShootTime():void
+    + setShootStrategy(ShootStrategy shootStrategy):void
+    + shoot():List<BaseBullet>
+ }
+
+AbstractFlyingObject <|-- AbstractAircraft
+
+abstract class EnemyAircraft
+{
+    # score:int
+    # propNum:int
+    - isNaturalDeath:boolean
+    + EnemyAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + getScore():int
+    + getIsNaturalDeath():boolean
+    + setIsNaturalDeath(boolean isNaturalDeath):void
+    + dropProp():List<AbstractProp>
+    + forward():void
+}
+
+AbstractAircraft <|-- EnemyAircraft
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + update():void
+}
+
+class EliteEnemy {
+    + EliteEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + update():void
+}
+
+class ElitePlusEnemy {
+    + ElitePlusEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + update():void
+}
+
+class BossEnemy {
+    + BossEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
+    + update():void
+}
+
+EnemyAircraft <|-- MobEnemy
+EnemyAircraft <|-- EliteEnemy
+EnemyAircraft <|-- ElitePlusEnemy
+EnemyAircraft <|-- BossEnemy
+
+class HeroAircraft {
+    - {static} heroAircraft:HeroAircraft
+    - HeroAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + {static} getHeroAircraft():HeroAircraft
+    + increaseHp(int increase):void
+    + getLoseHp():int
+    + setShootNum(int shootNum):void
+    + reset():void
+}
+
+AbstractAircraft <|-- HeroAircraft
+
+@enduml

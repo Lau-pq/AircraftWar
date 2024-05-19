@@ -1,40 +1,30 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-interface PropFactory {
-    + {abstract} createProp(int locationX, int locationY): AbstractProp
-}
-
-class BloodPropFactory {
-    + createProp(int locationX, int locationY): AbstractProp
-}
-
-class BombPropFactory {
-    + createProp(int locationX, int locationY): AbstractProp
-}
-
-abstract class AbstractProp
+abstract class AbstractFlyingObject
 {
-    + AbstractProp(int locationX, int locationY,
-    int speedX, int speedY)
-    + forward(): void
-    + {abstract} activate(HeroAircraft heroAircraft): void
+    # locationX:int
+    # locationY:int
+    # speedX:double
+    # speedY:double
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + getLocationX():int
+    + getLocationY():int
+    + setLocation(double locationX, double locationY):void
+    + getSpeedY():double
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
 }
-
-class ScatterBulletPropFactory {
-    + createProp(int locationX, int locationY): AbstractProp
-}
-
-class RingBulletPropFactory {
-    + createProp(int locationX, int locationY): AbstractProp
-}
-
-PropFactory <|.. BloodPropFactory
-PropFactory <|.. BombPropFactory
-PropFactory <|.. ScatterBulletPropFactory
-PropFactory <|.. RingBulletPropFactory
-
-PropFactory ..> AbstractProp
 
 abstract class AbstractProp
 {
@@ -42,6 +32,8 @@ abstract class AbstractProp
     + forward():void
     + {abstract} activate(HeroAircraft heroAircraft): void
 }
+
+AbstractFlyingObject <|-- AbstractProp
 
 class BloodProp {
     - recoverHp:int
@@ -56,13 +48,14 @@ abstract class BulletProp {
     - {static} bulletPropNum:int
     + BulletProp(int locationX, int locationY, double speedX, double speedY)
     - {static} changeBulletProp(String event):void
-    + recoverStraightShoot(HeroAircraft heroAircraft):void
+    + recoverStraightShoot (HeroAircraft heroAircraft):void
     + activate(HeroAircraft heroAircraft):void
 }
 
+
 class BombProp {
-    - flyingsObserverList:List<FlyingsObserver>
     + BombProp(int locationX, int locationY, double speedX, double speedY)
+    - flyingsObserverList:List<FlyingsObserver>
     + addflyingsObserver(FlyingsObserver flyingsObserver):void
     + notifyAllFlyings():void
     + activate(HeroAircraft heroAircraft):void

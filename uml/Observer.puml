@@ -1,18 +1,19 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-interface AircraftFactory {
-    + {abstract} createAircraft(int hp, int shootTime):EnemyAircraft
+class BombProp {
+    + BombProp(int locationX, int locationY, double speedX, double speedY)
+    - flyingsObserverList:List<FlyingsObserver>
+    + addflyingsObserver(FlyingsObserver flyingsObserver):void
+    + notifyAllFlyings():void
+    + activate(HeroAircraft heroAircraft):void
 }
 
-
-class MobEnemyFactory {
-    + createAircraft(int hp, int shootTime):EnemyAircraft
+interface FlyingsObserver {
+    + {abstract} update():void
 }
 
-class EliteEnemyFactory {
-    + createAircraft(int hp, int shootTime):EnemyAircraft
-}
+BombProp o--> FlyingsObserver
 
 abstract class EnemyAircraft
 {
@@ -26,21 +27,6 @@ abstract class EnemyAircraft
     + dropProp():List<AbstractProp>
     + forward():void
 }
-
-class ElitePlusEnemyFactory {
-    + createAircraft(int hp, int shootTime):EnemyAircraft
-}
-
-class BossEnemyFactory {
-    + createAircraft(int hp, int shootTime):EnemyAircraft
-}
-
-AircraftFactory <|.. MobEnemyFactory
-AircraftFactory <|.. EliteEnemyFactory
-AircraftFactory <|.. ElitePlusEnemyFactory
-AircraftFactory <|.. BossEnemyFactory
-
-AircraftFactory ..> EnemyAircraft
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, double speedX, double speedY, int hp)
@@ -66,5 +52,14 @@ EnemyAircraft <|-- MobEnemy
 EnemyAircraft <|-- EliteEnemy
 EnemyAircraft <|-- ElitePlusEnemy
 EnemyAircraft <|-- BossEnemy
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY, double speedX, double speedY, int power)
+    + update():void
+}
+
+FlyingsObserver <|.. EnemyAircraft
+FlyingsObserver <|.. EnemyBullet
+
 
 @enduml

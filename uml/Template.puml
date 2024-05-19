@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Game {
+    # enemyMaxNumber:int
+    # mobEnemyHP:int
+    # eliteEnemyHP:int
+    # elitePlusEnemyHP:int
+    # bossEnemyHP:int
+    # heroShootTime:int
+    # eliteEnemyShootTime:int
+    # elitePlusEnemyShootTime:int
+    # bossEnemyShootTime:int
+    # eliteProbability:double
+    # enemyCycleDuration:int
+    # updateCycleDuration:int
+    + Game()
+    + action():void
+    - addEnemyAircrafts():void
+    - timeCountAndNewCycleJudge(int cycleDuration):boolean
+    # {abstract} generateBoss():void
+    # isBossExist():boolean
+    # {abstract} updateAction():void
+    # {abstract} printDifficulty():void
+    # updateParam(int param, int limit, int change):int
+    # updateParam(double param, double limit, double change):double
+    - shootAction():void
+    - bulletsMoveAction():void
+    - aircraftsMoveAction():void
+    - propsMoveAction():void
+    - crashCheckAction():void
+    - deathCheckAction():void
+    - postProcessAction():void
+    - gameOverCheckAction():void
+}
+
+class EasyGame {
+    + EasyGame();
+    # generateBoss():void
+    # updateAction():void
+    # printDifficulty():void
+}
+
+class MediumGame {
+    + MediumGame();
+    # generateBoss():void
+    # updateAction():void
+    # printDifficulty():void
+}
+
+class HardGame {
+    - bossNum:int
+    + HardGame();
+    # generateBoss():void
+    # updateAction():void
+    # printDifficulty():void
+}
+
+Game <|-- EasyGame
+Game <|-- MediumGame
+Game <|-- HardGame
+
+@enduml

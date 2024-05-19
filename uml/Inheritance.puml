@@ -1,0 +1,72 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:double
+    # speedY:double
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + getLocationX():int
+    + getLocationY():int
+    + setLocation(double locationX, double locationY):void
+    + getSpeedY():double
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    # shootNum:int
+    # power:int
+    # direction:int
+    # shootTime:int
+    - shootStrategy:ShootStrategy
+    + AbstractAircraft(int locationX, int locationY, double speedX, double speedY, int hp)
+    + getHp():int
+    + getMaxHp():int
+    + decreaseHp(int decrease):void
+    + getShootNum():int
+    + getPower():int
+    + getDirection():int
+    + getShootTime():int
+    + setShootTime():void
+    + setShootStrategy(ShootStrategy shootStrategy):void
+    + shoot():List<BaseBullet>
+ }
+
+abstract class BaseBullet
+{
+    - power:int
+    + BaseBullet(int locationX, int locationY, double speedX, double speedY, int power)
+    + forward():void
+	+ getPower():int
+}
+
+
+abstract class AbstractProp
+{
+    + AbstractProp(int locationX, int locationY, double speedX, double speedY)
+    + forward():void
+    + {abstract} activate(HeroAircraft heroAircraft): void
+}
+
+
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- BaseBullet
+AbstractFlyingObject <|-- AbstractProp
+
+@enduml

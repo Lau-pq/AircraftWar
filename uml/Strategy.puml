@@ -37,7 +37,7 @@ abstract class AbstractAircraft
     + shoot():List<BaseBullet>
 }
 
- AbstractAircraft o--> ShootStrategy
+AbstractAircraft o--> ShootStrategy
 
 
 

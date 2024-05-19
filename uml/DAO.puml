@@ -6,7 +6,9 @@ class Record{
     - score:int
     - time:String
     + Record(String name,int score,String time)
+    + getName():String
     + getScore():int
+    + getTime():String
     + toString():String
 }
 
@@ -15,27 +17,34 @@ RecordDaoImpl --> Record
 Interface RecordDao{
     + {abstract} getAllRecords():List<Record>
     + {abstract} addRecord(Record record):void
-    + {abstract} deleteRecords(String name):void
+    + {abstract} deleteRecords(int[] rows):void
     + {abstract} sortRecords():void
-    + {abstract} readRecords():void
-    + {abstract} saveRecords(Record record):void
-    + {abstract} cleanRecords():void
+    + {abstract} readRecords():List<Record>
+    + {abstract} saveRecord(Record record):void
+    + {abstract} updateRecords(List<Record> records):void
+    + {abstract} cleanLocalRecords():void
+    + {abstract} cleanRemoteRecords():void
     + {abstract} printRecords():void
+    + {abstract} toSwingTable(List<Record> records):DefaultTableModel
 }
 
 class RecordDaoImpl{
     - recordList:List<Record>
     - filePath:Path
-    + RecordDaoImpl(Path filepath)
+    + RecordDaoImpl(int level)
     + getAllRecords():List<Record>
     + addRecord(Record record):void
-    + deleteRecords(String name):void
+    + deleteRecords(int[] rows):void
     + sortRecords():void
-    + readRecords():void
-    + saveRecords(Record record):void
-    + cleanRecords():void
+    + readRecords():List<Record>
+    + saveRecord(Record record):void
+    + updateRecords(List<Record> records):void
+    + cleanLocalRecords():void
+    + cleanRemoteRecords():void
     + printRecords():void
+    + toSwingTable(List<Record> records):DefaultTableModel
 }
+
 RecordDao <|.. RecordDaoImpl
 
 @enduml
